@@ -7,8 +7,8 @@ NCD project (Near Wallet)
 
 ## Description
 
-The basis of the project is the repositories ([Guest book in AS](https://github.com/Lagotrixa/guest-book)) ([Simple counter in Rust](https://github.com/near-examples/rust-counter)) ([Near SDK docs](https://www.near-sdk.io/contract-interface/payable-methods)) ([Examples near](https://examples.near.org/))
-Contract in `contract/src/lib.rs` provides methods get/send Near.
+The basis of the project is the repositories [Guest book in AS](https://github.com/Lagotrixa/guest-book), [Simple counter in Rust](https://github.com/near-examples/rust-counter). Used information from sources [Near SDK docs](https://www.near-sdk.io/contract-interface/payable-methods), [Examples near](https://examples.near.org/).
+Contract in `contract/src/lib.rs` provides methods get/send Near. Only those users who know the passphrase (key) can receive Near tokens. Any participants can send Near to a smart contract.
 
 
 
@@ -96,7 +96,6 @@ cargo test -- --nocapture
 - `contract/src/lib.rs` for the contract code
 - `src/index.html` for the front-end HTML
 - `src/main.js` for the JavaScript front-end code and how to integrate contracts
-- `src/test.js` for the JS tests for the contract
 
 ## To Build the Documentation
 
