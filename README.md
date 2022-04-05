@@ -1,4 +1,4 @@
-Counter example in Rust
+NCD project (Near Wallet)
 =================================
 
 [![Open in Gitpod!](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Lagotrixa/NCD_project/)
@@ -16,7 +16,7 @@ Plus and minus buttons increase and decrease value correspondingly. When button 
 Open in the Gitpod link above or clone the repository.
 
 ```
-git clone https://github.com/near-examples/rust-counter
+git clone https://github.com/Lagotrixa/NCD_project
 ```
 
 
