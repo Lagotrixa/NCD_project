@@ -7,10 +7,10 @@ NCD project (Near Wallet)
 
 ## Description
 
-This contract implements simple counter backed by storage on blockchain.
-Contract in `contract/src/lib.rs` provides methods to increment / decrement counter and get it's current value or reset.
+The basis of the project is the repositories ([Guest book in AS](https://github.com/Lagotrixa/guest-book)) ([Simple counter in Rust](https://github.com/near-examples/rust-counter)) ([Near SDK docs](https://www.near-sdk.io/contract-interface/payable-methods)) ([Examples near](https://examples.near.org/))
+Contract in `contract/src/lib.rs` provides methods get/send Near.
 
-Plus and minus buttons increase and decrease value correspondingly. When button L is toggled, a little light turns on, just for fun. RS button is for reset. LE and RE buttons to let the robot wink at you.
+
 
 ## To Run
 Open in the Gitpod link above or clone the repository.
