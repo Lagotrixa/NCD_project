@@ -5,10 +5,10 @@
   "license": "(MIT AND Apache-2.0)",
   "scripts": {
     "build": "cd contract && cargo build --target wasm32-unknown-unknown --release",
-    "postbuild": "cp contract/target/wasm32-unknown-unknown/release/rust_counter_tutorial.wasm ./out/main.wasm",
-    "deploy:contract": "near deploy",
+    "postbuild": "cp contract/target/wasm32-unknown-unknown/release/*.wasm ./out/",
+    "deploy:contract": "near deploy wallet.lagotrixa.testnet --wasmFile out/wallet.wasm --initFunction 'wallet' --initArgs '{\"_key\": \"68d475f01277f8cce11f4f6ed4993f53e0426263393e6a6df8ef02ac9d2872d1\"}'",
     "deploy:pages": "gh-pages -d src",
-    "deploy": "yarn build && yarn deploy:contract",
+    "deplxoy": "yarn build && yarn deploy:contract",
     "deploy:dev": "yarn build && near dev-deploy",
     "dev": "yarn deploy:dev && yarn start:dev",
     "prestart": "yarn build && yarn deploy:contract",
@@ -24,13 +24,18 @@
     "jest-environment-node": "~27.3.1",
     "near-cli": "^2.1.1",
     "nodemon": "~2.0.14",
-    "parcel-bundler": "~1.12.5"
+    "parcel-bundler": "~1.12.5",
+    "sass": "^1.49.11"
   },
   "jest": {
     "testEnvironment": "near-cli/test_environment"
   },
   "dependencies": {
+    "big.js": "^6.1.1",
     "near-api-js": "^0.43.1",
+    "prop-types": "^15.8.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "regenerator-runtime": "^0.13.9"
   }
 }
