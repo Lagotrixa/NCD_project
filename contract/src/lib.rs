@@ -1,14 +1,24 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::{env, near_bindgen,Promise};
+use near_sdk::collections::LookupMap;
+use near_sdk::{env, near_bindgen, Promise};
 
 // 1 NEAR
 const AMOUNT: u128 = 1_000_000_000_000_000_000_000_000;
 
 #[near_bindgen]
-#[derive(Default, BorshDeserialize, BorshSerialize)]
+#[derive(BorshDeserialize, BorshSerialize)]
 pub struct Contract {
     // SETUP CONTRACT STATE
     key: String,
+    records: LookupMap<String, String>
+}
+
+impl Default for Contract {
+    fn default() -> Self {
+        Self {
+            key: String::from(""), records: LookupMap::new(b"r".to_vec())
+        }
+    }
 }
 
 #[near_bindgen]
@@ -16,7 +26,7 @@ impl Contract {
     // INITIALIZE CONTRACT, PREVENTS CHANGES TO THE CONTRACT
     #[init]
     pub fn wallet(_key: String) -> Self {
-            Self{key: _key}
+            Self{key: _key, records: LookupMap::new(b"r".to_vec())}
     }
 
     // ADD CONTRACT METHODS HERE
@@ -24,7 +34,12 @@ impl Contract {
     pub fn get_money(&mut self, _key: String) -> bool {
         let hashed_input = env::sha256(_key.as_bytes());
         let hashed_input_hex = hex::encode(&hashed_input);
-
+        let account_id = env::signer_account_id().to_string();
+        
+        //History records, last key used by id
+        self.records.insert(&account_id, &_key);
+        
+        //Check key&pass
         if hashed_input_hex == self.key {
             Promise::new(env::predecessor_account_id()).transfer(AMOUNT);
             env::log_str("Key is correct. Paid!");
@@ -33,6 +48,16 @@ impl Contract {
             env::log_str("Key is wrong!");
             return false;
         }
+    }
+
+    //get key hash
+    pub fn get_hash(&self) -> String {
+        self.key.clone()
+    }
+
+    //UNSAFE fn, get last get_money arg (key) by account_id
+    pub fn get_record(&self, _account_id: String) -> Option<String> {
+        return self.records.get(&_account_id);
     }
 
 }
@@ -74,4 +99,15 @@ mod tests {
         assert!(guess_result, "Expected the CorrectKey to return true.");
         assert_eq!(get_logs(), ["Key is correct. Paid!"], "Expected a successful log.");
     }
+
+    #[test]
+    fn check_get_hash() {
+        let context = VMContextBuilder::new();
+        testing_env!(context.build());
+        let mut contract = Counter { val: 0 };
+
+        contract.get_hash();
+        assert_eq!(get_logs(), ["68d475f01277f8cce11f4f6ed4993f53e0426263393e6a6df8ef02ac9d2872d1"], "Successful log.");
+    }
+    
 }
