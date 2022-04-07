@@ -87,27 +87,36 @@ mod tests {
     // TESTS HERE
     #[test]
     fn check_get_money() {
-        let context = VMContextBuilder::new();
+        // Set test account ID
+        let dummy = AccountId::new_unchecked("lagotrixa.testnet".to_string());
+
+        // Set up the testing context and unit test environment
+        let context = get_context(dummy);
         testing_env!(context.build());
-        let mut contract = Counter { val: 0 };
 
-        let mut guess_result = contract.get_money("WrongKey".to_string());
-        assert!(!(guess_result), "Expected a failure from the WrongKey");
-        assert_eq!(get_logs(), ["Key is wrong!"], "Expected a failure log.");
+        // Set up contract object and call the wallet method
+        let mut contract = Contract::wallet
+            ("68d475f01277f8cce11f4f6ed4993f53e0426263393e6a6df8ef02ac9d2872d1".to_string());
 
-        guess_result = contract.get_money("CorrectKey".to_string());
-        assert!(guess_result, "Expected the CorrectKey to return true.");
-        assert_eq!(get_logs(), ["Key is correct. Paid!"], "Expected a successful log.");
+        assert_eq!(contract.get_money("WrongKey".to_string()), false);
+
+        assert_eq!(contract.get_money("CorrectKey".to_string()), true);
     }
 
     #[test]
     fn check_get_hash() {
-        let context = VMContextBuilder::new();
-        testing_env!(context.build());
-        let mut contract = Counter { val: 0 };
+        // Set test account ID
+        let dummy = AccountId::new_unchecked("lagotrixa.testnet".to_string());
 
-        contract.get_hash();
-        assert_eq!(get_logs(), ["68d475f01277f8cce11f4f6ed4993f53e0426263393e6a6df8ef02ac9d2872d1"], "Successful log.");
+        // Set up the testing context and unit test environment
+        let context = get_context(dummy);
+        testing_env!(context.build());
+
+        // Set up contract object and call the new method
+        let mut contract = Contract::wallet
+            ("68d475f01277f8cce11f4f6ed4993f53e0426263393e6a6df8ef02ac9d2872d1".to_string());
+
+        assert_eq!(contract.get_hash(), "68d475f01277f8cce11f4f6ed4993f53e0426263393e6a6df8ef02ac9d2872d1");
     }
     
 }
