@@ -6,9 +6,9 @@
   "scripts": {
     "build": "cd contract && cargo build --target wasm32-unknown-unknown --release",
     "postbuild": "cp contract/target/wasm32-unknown-unknown/release/*.wasm ./out/",
-    "deploy:contract": "near deploy --wasmFile out/wallet.wasm --initFunction 'wallet' --initArgs '{\"_key\": \"68d475f01277f8cce11f4f6ed4993f53e0426263393e6a6df8ef02ac9d2872d1\"}'",
+    "deploy:contract": "near deploy wallet.lagotrixa.testnet --wasmFile out/wallet.wasm --initFunction 'wallet' --initArgs '{\"_key\": \"68d475f01277f8cce11f4f6ed4993f53e0426263393e6a6df8ef02ac9d2872d1\"}'",
     "deploy:pages": "gh-pages -d src",
-    "deplxoy": "yarn build && yarn deploy:contract",
+    "deploy": "yarn build && yarn deploy:contract",
     "deploy:dev": "yarn build && near dev-deploy",
     "dev": "yarn deploy:dev && yarn start:dev",
     "prestart": "yarn build && yarn deploy:contract",
